@@ -1,0 +1,249 @@
+%num-disk {
+	display: grid;
+	grid-template-columns: [fullSize-start] 5% [num6-start] 5% [num5-start num7-start] 10% [num6-end] 3.5% [num4-start num8-start] 1.5% [num5-end num7-end] 13.5% [num4-end num8-end] 4% [num3-start num9-start] 15% [num3-end num9-end] 4% [num2-start num0-start] 13.5% [num1-start] 1.5% [num2-end num0-end] 13.5% [num1-end] 10% [fullSize-end];
+	grid-template-rows: [fullSize-start] 5% [num3-start] 5% [num4-start num2-start] 10% [num3-end] 3.5% [num5-start num1-start] 1.5% [num4-end num2-end] 13.5% [num5-end num1-end] 4% [num6-start] 15% [num6-end] 3.5% [num7-start] 14% [num8-start num0-start] 1% [num7-end] 4% [num9-start] 10% [num8-end num0-end] 5% [num9-end] 5% [fullSize-end];
+	grid-column: leftBorder / rightBorder;
+	grid-row: topBorder / bottomBorder;
+	border-radius: 50%;
+	
+	& .phone-num {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		
+		&-1 { grid-area: num1; }
+		&-2 { grid-area: num2; }
+		&-3 { grid-area: num3; }
+		&-4 { grid-area: num4; }
+		&-5 { grid-area: num5; }
+		&-6 { grid-area: num6; }
+		&-7 { grid-area: num7; }
+		&-8 { grid-area: num8; }
+		&-9 { grid-area: num9; }
+		&-0 { grid-area: num0; }
+	}
+}
+
+@mixin item-range($num) {
+	& > .num {
+		display: none;
+		height: 100%;
+	}
+	#rng-#{$num}-C:not(:checked) ~ input.rng-#{$num}:checked ~ & {
+		display: block;
+	}
+
+	@for $i from 1 through 10 {
+		#rng-#{$num}-#{$i}:checked ~ & > .num-#{$i} {
+			display: block;
+		}
+	}
+}
+@mixin rotation-disk($range, $n) {
+	// input#rng-#{$range}-#{$n}:checked ~ * & {
+		@if $range % 2 == 0 {
+			animation-name: rotation-disk-#{$n}a;
+		}
+		@else {
+			animation-name: rotation-disk-#{$n}b;
+		}
+		animation-duration: $n * 0.25s;
+	// }
+}
+
+.phone {
+	&-disk {
+		display: grid;
+		flex: 0 1 auto;
+		grid-template-columns: [leftBorder] 1fr [rightBorder];
+		grid-template-rows: [topBorder] 1fr [bottomBorder];
+		width: 100%;
+		max-width: 250px;
+
+		&::before {
+			content: '';
+			display: block;
+			grid-column: leftBorder / rightBorder;
+			grid-row: topBorder / bottomBorder;
+			padding-bottom: 100%;
+		}
+
+		&--wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 10px
+		}
+
+		&-lower, &-interactive {
+			@extend %num-disk;
+		}
+
+		&-lower {
+			background: $bg_base;
+			& .phone-num {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 20px;
+			}
+		}
+		&-interactive {
+			& .phone-num {
+				display: none;
+				z-index: 100;
+
+				input[name="rng-1"]:not(:checked) ~ * > &, #rng-1-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: block; }
+				}
+				input[name="rng-1"]:checked ~ input[name="rng-2"]:not(:checked) ~ * > &,
+				#rng-1-C:not(:checked) ~ #rng-2-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: none; }
+					&.phone-num-rng-2 { display: block; }
+				}
+				input[name="rng-1"]:checked ~ input[name="rng-2"]:checked ~ input[name="rng-3"]:not(:checked) ~ * > &,
+				#rng-1-C:not(:checked) ~ #rng-2-C:not(:checked) ~ #rng-3-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: none; }
+					&.phone-num-rng-2 { display: none; }
+					&.phone-num-rng-3 { display: block; }
+				}
+				input[name="rng-1"]:checked ~ input[name="rng-2"]:checked ~ input[name="rng-3"]:checked ~ input[name="rng-4"]:not(:checked) ~ * > &,
+				#rng-1-C:not(:checked) ~ #rng-2-C:not(:checked) ~ #rng-3-C:not(:checked) ~ #rng-4-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: none; }
+					&.phone-num-rng-2 { display: none; }
+					&.phone-num-rng-3 { display: none; }
+					&.phone-num-rng-4 { display: block; }
+				}
+				input[name="rng-1"]:checked ~ input[name="rng-2"]:checked ~ input[name="rng-3"]:checked ~ input[name="rng-4"]:checked ~ input[name="rng-5"]:not(:checked) ~ * > &,
+				#rng-1-C:not(:checked) ~ #rng-2-C:not(:checked) ~ #rng-3-C:not(:checked) ~ #rng-4-C:not(:checked) ~ #rng-5-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: none; }
+					&.phone-num-rng-2 { display: none; }
+					&.phone-num-rng-3 { display: none; }
+					&.phone-num-rng-4 { display: none; }
+					&.phone-num-rng-5 { display: block; }
+				}
+				input[name="rng-1"]:checked ~ input[name="rng-2"]:checked ~ input[name="rng-3"]:checked ~ input[name="rng-4"]:checked ~ input[name="rng-5"]:checked ~ input[name="rng-6"]:not(:checked) ~ * > &,
+				#rng-1-C:not(:checked) ~ #rng-2-C:not(:checked) ~ #rng-3-C:not(:checked) ~ #rng-4-C:not(:checked) ~ #rng-5-C:not(:checked) ~ #rng-6-C:checked ~ * > & {
+					&.phone-num-rng-1 { display: none; }
+					&.phone-num-rng-2 { display: none; }
+					&.phone-num-rng-3 { display: none; }
+					&.phone-num-rng-4 { display: none; }
+					&.phone-num-rng-5 { display: none; }
+					&.phone-num-rng-6 { display: block; }
+				}
+			}
+		}
+		
+		&-upper {
+			display: grid;
+			grid-template-columns: [leftBorder] 1fr [rightBorder];
+			grid-template-rows: [topBorder] 1fr [bottomBorder];
+			background: $primary_default_cntr_light;
+			grid-area: fullSize;
+			clip-path: url(#phone-disk-mask);
+			border-radius: 50%;
+			z-index: 50;
+
+			transition-property: transform;
+			transition-duration: .25s;
+			transition-timing-function: ease-in;
+
+			animation-timing-function: ease-in;
+			
+			@for $n-selected from 1 through 10 {
+				input#rng-1-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(1, $n-selected)
+				}
+
+				input.rng-1:checked ~ input#rng-2-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(2, $n-selected)
+				}
+						
+				input.rng-1:checked ~ input.rng-2:checked ~ input#rng-3-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(3, $n-selected)
+				}
+
+				input.rng-1:checked ~ input.rng-2:checked ~ input.rng-3:checked ~ input#rng-4-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(4, $n-selected)
+				}
+
+				input.rng-1:checked ~ input.rng-2:checked ~ input.rng-3:checked ~ input.rng-4:checked ~ input#rng-5-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(4, $n-selected)
+				}
+
+				input.rng-1:checked ~ input.rng-2:checked ~ input.rng-3:checked ~ input.rng-6:checked ~ input.rng-5:checked ~ input#rng-6-#{$n-selected}:checked ~ * & {
+					@include rotation-disk(4, $n-selected)
+				}
+			}
+
+			&::before, &::after {
+				content: '';
+				display: block;
+				box-sizing: border-box;
+				grid-column: leftBorder / rightBorder;
+				grid-row: topBorder / bottomBorder;
+				align-self: center;
+				justify-self: center;
+				border-radius: 50%;
+			}
+
+			&::before {
+				width: 52%;
+				height: 52%;
+				background: $primary_default_cntr_light_dark2;
+			}
+			&::after {
+				width: 40%;
+				height: 40%;
+				border: 1px solid rgba(255,255,255, .5);
+			}
+
+			.phone-num:hover ~ & {
+				transform: rotateZ(2deg); 
+			}
+		}
+		&-string {
+			display: flex;
+			justify-content: flex-end;
+			width: 100%;
+			max-width: 250px;
+			height: 40px;
+			padding: 5px 20px;
+			border: 1px solid $primary_default_cntr_light;
+			border-radius: 20px;
+			row-gap: 2px;
+			overflow: hidden;
+			font-size: 1.2rem;
+
+			& .item-range {
+				display: none;
+				
+				&-1 { @include item-range(1); }
+				&-2 { @include item-range(2); }
+				&-3 { @include item-range(3); }
+				&-4 { @include item-range(4); }
+				&-5 { @include item-range(5); }
+				&-6 { @include item-range(6); }
+			}
+		}
+	}
+	&-radio {
+		display: none;
+	}
+}
+
+@for $n from 1 through 10 {
+	@keyframes rotation-disk-#{$n}a {
+		from { transform: rotateZ(0deg); }
+		50% { transform: rotateZ(30deg * $n); }
+		to { transform: rotateZ(0deg); }
+	}
+	@keyframes rotation-disk-#{$n}b {
+		from { transform: rotateZ(0deg); }
+		50% { transform: rotateZ(30deg * $n); }
+		to { transform: rotateZ(0deg); }
+	}
+}

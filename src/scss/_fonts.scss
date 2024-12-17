@@ -1,0 +1,58 @@
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('../assets/#{$icomoon-font-path}/#{$icomoon-font-family}.eot?l8vsl0');
+  src:  url('../assets/#{$icomoon-font-path}/#{$icomoon-font-family}.eot?l8vsl0#iefix') format('embedded-opentype'),
+    url('../assets/#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?l8vsl0') format('truetype'),
+    url('../assets/#{$icomoon-font-path}/#{$icomoon-font-family}.woff?l8vsl0') format('woff'),
+    url('../assets/#{$icomoon-font-path}/#{$icomoon-font-family}.svg?l8vsl0##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dgc-arrow-down-double-fill {
+  &:before {
+    content: $dgc-arrow-down-double-fill; 
+  }
+}
+.dgc-arrow-drop-down-fill {
+  &:before {
+    content: $dgc-arrow-drop-down-fill; 
+  }
+}
+.dgc-arrow-drop-down-line {
+  &:before {
+    content: $dgc-arrow-drop-down-line; 
+  }
+}
+.dgc-arrow-drop-up-fill {
+  &:before {
+    content: $dgc-arrow-drop-up-fill; 
+  }
+}
+.dgc-arrow-drop-up-line {
+  &:before {
+    content: $dgc-arrow-drop-up-line; 
+  }
+}
+.dgc-arrow-up-double-fill {
+  &:before {
+    content: $dgc-arrow-up-double-fill; 
+  }
+}
+

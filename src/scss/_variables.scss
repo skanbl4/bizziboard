@@ -1,0 +1,56 @@
+$icomoon-font-family: "dg-cat-font" !default;
+$icomoon-font-path: "fonts" !default;
+
+$dgc-arrow-down-double-fill: "\e900";
+$dgc-arrow-drop-down-fill: "\e901";
+$dgc-arrow-drop-down-line: "\e902";
+$dgc-arrow-drop-up-fill: "\e903";
+$dgc-arrow-drop-up-line: "\e904";
+$dgc-arrow-up-double-fill: "\e905";
+
+$bg_base: #F7F8FA;
+$bg_header: #62708C;
+$bg_header_darkness: #6B7A99;
+$bg_aside: #ADB8CC;
+$bg_card: #FFFFFF;
+
+$primary_default: $bg_base;
+$primary_selected: #FF6633;
+$primary_hover: #FF8D66;
+$primary_darkness: #7C8AA6;
+
+$color_default: #4D5E80;
+$color_highlight: #CC7429;
+$color_accept: #00B211;
+$color_decline: #BB2200;
+
+$primary_default_cntr_light: #C3CAD9;
+$primary_default_cntr_light_dark: #ADB8CC;
+$primary_default_cntr_light_dark2: #99A6BF;
+$primary_selected_cntr_light: $bg_card;
+// $primary_hover: #F5F6F7;
+
+
+$font-size-great: 24px;
+$font-size-large: 20px;
+$font-size-default: 16px;
+$font-size-less: 14px;
+
+$gap_default: 20px;
+$radius_default: 20px;
+
+%translateX {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+%translateY {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+%translateXY {
+    @extend %translateX;
+    @extend %translateY;
+    transform: translate(-50%, -50%);
+}

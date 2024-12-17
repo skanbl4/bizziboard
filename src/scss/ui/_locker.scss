@@ -1,0 +1,123 @@
+@use 'sass:math';
+@mixin circle($n, $color) {
+	position: absolute;
+	width: 100%-$n*20;
+	height: 100%-$n*20;
+	margin: 10%*$n;
+	background: inherit;
+	border-radius: 50%;
+	&::before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		content: '';
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background-color: rgba($color,0.1 + math.div($n, 5));
+		transition: background-color .25s linear;
+	}
+	&::after {
+		position: absolute;
+		top: math.div(50%, 10 - $n * 2);
+		left: math.div(50%, 10 - $n * 2);
+		display: block;
+		content: '';
+		width: 100% - math.div(100, 10 - $n * 2);
+		height: 100% - math.div(100, 10 - $n * 2);
+		border-radius: 50%;
+		background: inherit;
+	}
+}
+.check-lock-wrapper {
+	width: 60px;
+	height: 60px;
+	background: inherit;
+}
+.check-lock {
+	width: 100%;
+	height: 100%;
+	background: inherit;
+
+	& > label {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background: inherit;
+
+		&:hover {
+			background-color: #f7f0f0;
+			box-shadow: 0 0 20px 10px #f7f0f0;
+		}
+
+		& > .stroke {
+			position: absolute;
+			top: 47%;
+			left: 0;
+			z-index: 100;
+			background-color: inherit;
+			width: 100%;
+			height: 6%;
+			transition-property: transform;
+			transition-duration: .55s;
+			transition-timing-function: ease-in-out;
+			&:before, &:after {
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: block;
+				content: '';
+				width: 100%;
+				height: 100%;
+				background-color: inherit;
+			}
+			&:before {
+				transform: rotate(60deg);
+			}
+			&:after {
+				transform: rotate(120deg);
+			}
+		}
+		@for $n from 0 through 3 {
+			&>.round-#{$n+1} {
+				@include circle($n, $color_decline);
+				animation: switch_locker_off .25s ease-in-out math.div(3s - $n, 10);
+			}
+		}
+	}
+
+	& > input {
+		display: none;
+		&:checked {
+			&+label {
+				&:hover {
+					background-color: #f0f7f0;
+					box-shadow: 0 0 20px 10px #f0f7f0;
+				}
+				@for $n from 0 through 3 {
+					&>.round-#{$n+1} {
+						@include circle($n, $color_accept);
+						animation: switch_locker_on .25s ease-in-out  math.div(3s - $n, 10);
+					}
+				}
+				& > .stroke {
+					transform: rotate(120deg);
+				}
+			}
+		}
+	}
+}
+
+@keyframes switch_locker_on {
+	from { scale: 1; }
+	50% { scale: .8; }
+	to { scale: 1; }
+}
+@keyframes switch_locker_off {
+	from { scale: 1; }
+	50% { scale: .8; }
+	to { scale: 1; }
+}

@@ -1,0 +1,123 @@
+@use "sass:math";
+body {
+    margin: 0;
+    background-color: #4D5E80;
+}
+
+$frameH: 8%;
+
+#scene {
+    display: grid;
+    grid-template-columns: [frame-wrapper-start sky-start ground-start] 100%  [frame-wrapper-end sky-end ground-end];
+    grid-template-rows: [frame-wrapper-start sky-start] 50% [sky-end ground-start] 50% [frame-wrapper-end ground-end];
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    .layer-wrapper {
+        display: grid;
+        grid-area: frame-wrapper;
+        grid-template-columns: [frame-start] 100%  [frame-end];
+        grid-template-rows: [frame-start] 100% [frame-end];
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+    .layer {
+        display: flex;
+        width: auto;
+        height: math.div($frameH, 2);
+        grid-area: frame;
+        align-items: center;
+        opacity: 0;
+        z-index: 100;
+
+        transition-property: height, opacity, filter;
+        transition-duration: .5s;
+        & > img {
+            height: 50%;
+            transform: translateY(-16.75%);
+        }
+        & + .layer {
+            opacity: 1;
+            filter: brightness(0.8);
+            height: $frameH;
+            z-index: 200;
+            & + .layer {
+                filter: brightness(0.85);
+                height: $frameH * 1.5;
+                z-index: 300;
+                & + .layer {
+                    filter: brightness(0.85);
+                    height: $frameH * 1.5 *1.55;
+                    z-index: 400;
+                    & + .layer {
+                        filter: brightness(0.85);
+                        height: $frameH * 1.5 *1.55 * 1.6;
+                        z-index: 500;
+                        & + .layer {
+                            filter: brightness(0.9);
+                            height: $frameH * 1.5 *1.55 * 1.6 * 1.65;
+                            z-index: 600;
+                            & + .layer {
+                                height: $frameH * 1.5 *1.55 * 1.6 * 1.65 * 1.7;
+                                z-index: 700;
+                                & + .layer {
+                                    filter: brightness(0.95);
+                                    height: $frameH * 1.5 *1.55 * 1.6 * 1.65 * 1.7 * 1.75;
+                                    z-index: 800;
+                                    & + .layer {
+                                        filter: brightness(1);
+                                        height: $frameH * 1.5 *1.55 * 1.6 * 1.65 * 1.7 * 1.75 * 1.8;
+                                        z-index: 800;
+                                        & + .layer {
+                                            height: $frameH * 1.5 *1.55 * 1.6 * 1.65 * 1.7 * 1.75 * 1.8 * 1.85;
+                                            z-index: 800;
+                                            opacity: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .sky-layer {
+        grid-area: sky;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+
+        .cloud-move {
+            position: relative;
+            width: 200%;
+            .cloud-line {
+                position: relative;
+                left: 0;
+                width: 100%;
+                & > img {
+                    width: 50%;
+                }
+                animation: cloudOne 30s linear 0s infinite;
+            }
+        }
+        .cloud-move + .cloud-move {
+            animation: cloudOne 40s linear 0s infinite;
+        }
+    }
+    .ground-layer {
+        grid-area: ground;
+        background-color: #202B40;
+    }
+}
+
+@keyframes cloudOne {
+    from {
+        left: 0;
+    }
+    to {
+        left: -50%;
+    }
+}

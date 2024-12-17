@@ -1,0 +1,89 @@
+.dial {
+    width: 100%;
+    border-radius: 5px;
+    background: $primary_default_cntr_light;
+    &-body {
+        display: grid;
+        grid-template-columns: [borderLeft] 1fr [centerLeft] 30px [centerRight] 1fr [borderRight];
+        grid-template-rows: [borderTop] 1fr [centerTop] 15px [borderBottom] 15px [centerBottom];
+        width: 100%;
+        margin: 0 auto;
+        padding: 10px 20px 40px;
+
+        @media (min-width: 992px) {
+            padding: 10px 20px calc(10% - 15px);
+        }
+
+        &::before {
+            content: '';
+            grid-column: borderLeft/borderRight;
+            grid-row: borderTop/borderBottom;
+            padding-bottom: 33%;
+        }
+    }
+    &-glass {
+        grid-column: borderLeft/borderRight;
+        grid-row: borderTop/borderBottom;
+        background: $bg_card;
+        border-radius: 50% / 40%;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-top: 5px;
+        padding-bottom: 1px;
+    }
+    &-scale {
+        &::before {
+            content: '';
+            display: block;
+            width: 60%;
+            margin: 0 auto;
+            padding-bottom: 30%;
+            background: $primary_default;
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+        }
+        &::after {
+            content: '';
+            display: block;
+            width: 40%;
+            margin: -20% auto;
+            padding-bottom: 20%;
+            background: $bg_card;
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+        }
+    }
+    &-arrow {
+        width: 2px;
+        height: 85%;
+        margin-bottom: 3px;
+        background: $primary_selected;
+        grid-column: centerLeft/centerRight;
+        grid-row: borderTop/borderBottom;
+        align-self: end;
+        justify-self: center;
+        transform-origin: bottom center;
+        transform: rotate(-90deg);
+        transition-property: transform;
+        transition-duration: .75s;
+        transition-delay: .25s;
+    }
+    &-pin {
+        grid-column: centerLeft/centerRight;
+        grid-row: centerTop/centerBottom;
+        margin-top: -3px;
+        border-radius: 50%;
+        background: $primary_default_cntr_light;
+        z-index: 50;
+
+        &::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            margin: 10px auto 10px;
+            border-radius: 50%;
+            background: $primary_selected;
+        }
+    }
+}

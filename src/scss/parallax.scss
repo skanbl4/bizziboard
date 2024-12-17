@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    * {
+        box-sizing: border-box;
+    }
+}
+
+#scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+.layer {
+    position: absolute;
+    bottom: 23%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    opacity: 0;
+    transition-property: bottom opacity;
+    transition-duration: .5s;
+    &>img {
+        width: 20%;
+        transition-property: width;
+        transition-duration: .5s;
+    }
+    &.preload {
+        opacity: 0;
+    }
+}
+.layer + .layer {
+    bottom: 20%;
+    opacity: 1;
+    &>img { width: 40%; }
+    & + .layer {
+        bottom: 10%;
+        opacity: 1;
+        &>img { width: 80%; }
+        & + .layer {
+            bottom: 5%;
+            opacity: 1;
+            &>img { width: 160%; }
+            & + .layer {
+                bottom: 0;
+                opacity: 1;
+                &>img { width: 180%; }
+                & + .layer {
+                    bottom: -5%;
+                    opacity: 0;
+                    &>img { width: 300%; }
+                }
+            }
+        }
+    }
+}

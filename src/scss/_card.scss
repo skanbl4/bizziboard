@@ -1,0 +1,41 @@
+@mixin card-sacle($x_span, $y_span, $modif: false) {
+	&-x {
+		grid-column: span $x_span;
+		@if $modif {
+			@media (min-width: 992px) {
+				grid-column: span calc($x_span - $modif);
+			}
+		}
+	}
+	&-y {
+		grid-row: span $y_span;
+	}
+	&-xy {
+		grid-column: span $x_span;
+		@if $modif {
+			@media (min-width: 992px) {
+				grid-column: span calc($x_span - $modif);
+			}
+		}
+		grid-row: span $y_span;
+	}
+}
+
+.card {
+	padding: $gap_default;
+	background: $bg_card;
+	border-radius: $radius_default;
+
+	&.small {
+		@include card-sacle(3, 1, 2);
+	}
+	&.medium {
+		@include card-sacle(3, 2, 1);
+	}
+	&.large {
+		@include card-sacle(3, 3);
+	}
+	&.largest {
+		@include card-sacle(3, 4);
+	}
+}

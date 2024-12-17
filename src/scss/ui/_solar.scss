@@ -1,0 +1,327 @@
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin orbit($size) {
+    width: $size;
+    height: $size;
+    border-radius: 100%;
+    border: 2px solid rgba($color: #fff, $alpha: .125);
+}
+@mixin protoplanete($w, $h, $m) {
+    width: $w;
+    height: $h;
+    margin: 5px;
+    border-radius: 100%;
+    position: relative;
+    margin: $m;
+}
+
+@mixin transform($info) {
+    transform: $info;
+  }
+@mixin gradient($type, $info) {
+    background: #{$type}-gradient($info);
+}
+@mixin blur($info) {
+    filter: blur($info);
+}
+
+  /* colors */
+  $sky: #363640;
+  $sun: #F2BC46;
+  
+  $mercury: #76777A;
+  
+  $venus: #D1734B;
+  $venus-extra: #E6AF97;
+  
+  $earth-sea: #496282;
+  $earth-green: #5E8249;
+  
+  $mars: #C25447;
+  
+  $jupiter-1: lighten(#E89150, 25);
+  $jupiter-2: #E89150;
+  $jupiter-3: #D16F1B;
+  
+  $saturn: #D1AA5E;
+  
+  $uranus: #9DB1BF;
+  
+  $neptune: #5870A8;
+  
+  $pluto: #805F47;
+  $pluto-2: darken(#854339, 5);
+.slide-2 {
+    overflow: hidden;
+    height: 100%;
+}
+
+.solar-wrapper {
+    @extend %flex-center;
+    height: 100%;
+    max-height: 250px;
+
+    .solar {
+        display: grid;
+        width: 100%;
+        grid-template-areas: "area";
+        background: #363640;
+
+        &::before {
+            content: '';
+            grid-area: area;
+            width: 100%;
+            padding-bottom: 100%;
+        }
+    }
+    .sun {
+        width: 9.5%;
+        height: 9.5%;
+        @extend %flex-center;
+        background-color: $sun;
+        border-radius: 100%;
+        opacity: 0.8;
+        &:before {
+          border-radius: 100%;
+          content: '';  
+          display: block;
+          width: 115%;
+          height: 115%;
+          margin: -7.5%;
+          opacity: 0.3;
+          z-index: -1;
+          @include blur(1px);
+          @include gradient(radial,($sun, lighten($sun, 10)));
+        }
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+    }
+    .mercury {
+        @include protoplanete(25%, 25%, 2.5%);
+        background-color: $mercury;
+        box-shadow: inset -3px -3px darken($mercury, 5);
+        &:before {
+            background-color: darken($mercury, 5);
+            border-radius: 100%;
+            content: '';
+            height: 25%;
+            width: 25%;
+            position: absolute;
+            top: 60%;
+            left: 20%;
+        }
+        &:after {
+            background-color: darken($mercury, 5);
+            border-radius: 100%;
+            content: '';
+            width: 20%;
+            height: 20%;
+            position: absolute;
+            left: 66.6%;
+            top: 20%;
+        }
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(15%);
+            animation: rotation 14s linear infinite;
+        }
+    }
+    .venus {
+        @include protoplanete(23%, 23%, 3%);
+        @include gradient(linear, (lighten($venus, 10) 5px, darken($venus, 10) 15px, $venus 25px, lighten($venus, 15) 40px, darken($venus, 10) 45px));
+        @include transform(rotate(30deg));
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(20%);
+            animation: rotation 37s linear infinite;
+        }
+    }
+    .earth {
+        @include protoplanete(20%, 20%, 5%);
+        background-color: $earth-sea;
+        box-shadow: inset -3px -3px darken($earth-sea, 5);
+        &:before {
+          background-color: $earth-green;
+          border-radius: 100% 70% 100% 70%;
+          content: '';
+          width: 50%;
+          height: 75%;
+          position: absolute;
+          top: 17%;
+          left: 4%;
+          @include transform(rotate(-30deg));
+        }
+        &:after {
+          background-color: $earth-green;
+          border-radius: 100% 70% 100% 70%;
+          content: '';
+          width: 20%;
+          height: 40%;
+          position: absolute;
+          top: 50%;
+          left: 72%;
+          @include transform(rotate(45deg));
+        }
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(25%);
+            animation: rotation 60s linear infinite;
+        }
+    }
+    .mars {
+        @include protoplanete(12%, 12%, 8%);
+        background-color: $mars;
+        box-shadow: inset -3px -3px darken($mars, 5);
+        // &:before {
+        //   background-color: darken($mars, 10);
+        //   border-radius: 100%;
+        //   height: 12px;
+        //   left: 20px;
+        //   top: 23px;
+        //   width: 12px;
+        // }
+        // &:after {
+        //   background-color: darken($mars, 10);
+        //   border-radius: 100%;
+        //   height: 9px;
+        //   left: 5px;
+        //   top: 10px;
+        //   width: 9px;
+        // }
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(30%);
+            animation: rotation 112s linear infinite;
+        }
+    }
+    .jupiter {
+        @include protoplanete(18%, 18%, 5%);
+        box-shadow: 0px 0px 0px;
+        @include gradient(linear, ($jupiter-2 5px, $jupiter-1 10px, $jupiter-3 30px, $jupiter-1 50px, $jupiter-3 55px, $jupiter-1 70px, $jupiter-2 75px));
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(42%);
+            animation: rotation 720s linear infinite;
+        }
+    }
+    .saturn {
+        @include protoplanete(12.75%, 12.75%, 7.75%);
+        background-color: $saturn;
+        box-shadow: inset -3px -3px darken($saturn, 12);
+        &:after {
+            content: '';
+            display: block;
+            background-color: transparent;
+            border-bottom: 10px solid darken($saturn, 20);
+            border-left: 10px solid darken($saturn, 20);
+            border-radius: 100% 70% 100% 70%;
+            height: 80%;
+            width: 80%;
+            position: absolute;
+            left: -5%;
+            top: -3%;
+            @include transform(rotate(-45deg) skew(65deg));
+        }
+        &:before {
+            content: '';
+            display: block;
+            background-color: transparent;
+            border-top: 10px solid darken($saturn, 20);
+            border-right: 10px solid darken($saturn, 20);
+            border-radius: 100% 70% 100% 70%;
+            border-left: 0;
+            border-bottom: 0;
+            height: 80%;
+            width: 80%;
+            position: absolute;
+            top: -3%;
+            left: -5%;
+            z-index: -1;
+            @include transform(rotate(-45deg) skew(65deg));
+        }
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(55%);
+            animation: rotation 1740s linear infinite;
+        }
+    }
+    .uranus {
+        @include protoplanete(9%, 9%, 10%);
+        background-color: $uranus;
+        box-shadow: inset -3px -3px darken($uranus, 15);
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(68%);
+            animation: rotation 5040s linear infinite;
+        }
+    }
+    .neptune {
+        background-color: $neptune;
+        @include protoplanete(6.5%, 6.5%, 11.25%);
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(80%);
+            animation: rotation 9900s linear infinite;
+        }
+    }
+    .pluto {
+        background-color: $pluto;
+        @include protoplanete(2.5%, 2.5%, 13.25%);
+        background-color: $pluto;
+        box-shadow: inset -3px -3px darken($pluto, 5);
+        &-box {
+            @extend %flex-center;
+            grid-area: area;
+        }
+        &-orbit {
+            @include orbit(90%);
+            animation: rotation 14880s linear infinite;
+        }
+    }
+}
+
+
+
+@keyframes rotation {
+    0% {
+        transform: rotate(-45deg);
+    }
+    33.333% {
+        transform: rotate(75deg);
+    }
+    66.666% {
+        transform: rotate(195deg);
+    }
+    100% {
+        transform: rotate(315deg);
+    }
+}

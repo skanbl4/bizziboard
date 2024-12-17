@@ -1,0 +1,159 @@
+@use 'sass:math';
+%energy-switch__placeholder {
+	position: relative;
+	display: flex;
+	flex: 0 1 auto;
+	align-items: center;
+	height: 100%;
+	padding: 5px 2px;
+	// border-radius: math.div(100, 8.4) / math.div(100%, 12.8);
+	border-radius: 5px;
+	background: $primary_default_cntr_light;
+	flex-direction: row;
+	flex-wrap: wrap;
+	cursor: pointer;
+}
+
+%tumbler-stick {
+	content: '';
+	position: absolute;
+	display: block;
+	border-radius: 2px;
+}
+
+@mixin energy-switch($height, $tumbler-width) {
+	&-vert--wrapper {
+		display: flex;
+		// width: $tumbler-width + 4px;
+		& .energy-switch {
+			@extend %energy-switch__placeholder;
+			flex-direction: column-reverse;
+			gap: 10px;
+			& .switch-label {
+				padding: 0;
+			}
+		}
+		& > input[type=checkbox] {
+			display: none;
+		}
+	}
+	&-hor--wrapper {
+		display: flex;
+		width: auto;
+		& .energy-switch {
+			@extend %energy-switch__placeholder;
+			flex-direction: row;
+			gap: 2px;
+			& .switch-label {
+				padding: 0 8px;
+			}
+		}
+		& > input[type=checkbox] {
+			display: none;
+		}
+	}
+
+	.switch-tumbler {
+		position: relative;
+		z-index: 100;
+		width: $tumbler-width;
+		height: $height;
+		flex: 0 1 auto;
+		border-radius: 3px;
+		background: $bg_base;
+
+		&::before {
+			@extend %tumbler-stick;
+			@extend %translateXY;
+			width: 60%;
+			height: 75%;
+			background-color: $primary_default_cntr_light;
+		}
+		&::after {
+			@extend %tumbler-stick;
+			@extend %translateXY;
+			width: 47.4%;
+			height: 46.2%;
+			background-color: $bg_header;
+		}
+
+		&-stick {
+			position: absolute;
+			@extend %translateXY;
+			width: 75%;
+			height: 138.5%;
+			z-index: 200;
+			&::before {
+				@extend %tumbler-stick;
+				@extend %translateX;
+				top: 22.25%;
+				width: 80%;
+				height: 13%;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				background-color: $bg_header_darkness;
+				transition-property: top, border-top-left-radius, border-top-right-radius, border-bottom-left-radius, border-bottom-right-radius;
+				transition-duration: .25s;
+
+				input[type=checkbox]:checked + &, input[type=checkbox]:checked + * > & {
+					top: 64.75%;
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+			}
+			&::after {
+				@extend %tumbler-stick;
+				@extend %translateX;
+				top: 0;
+				width: 100%;
+				height: 22.25%;
+				background-color: $primary_darkness;
+				transition-property: top;
+				transition-duration: .25s;
+
+				input[type=checkbox]:checked + &, input[type=checkbox]:checked + * > & {
+					top: 77.75%
+				}
+			}
+		}
+	}
+	.switch-label {
+		// width: 50px;
+		flex: 1 1 auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		& .switch-label-roll {
+			height: 1.429em;
+			overflow-y: hidden;
+			flex: 0 1 auto;
+			border-radius: 5px;
+			background: $bg_card;
+			padding: math.round(math.div($height, 40)) 5px;
+			font-size: 14px;
+			font-weight: 600;
+			text-align: center;
+			
+			&__inner {
+				color: $color_decline;
+				transform: translateY(0);
+				transition-property: transform, color;
+				transition-duration: .25s;
+				transition-delay: .125s;
+
+				input[type=checkbox]:checked + &, input[type=checkbox]:checked + * > & {
+					color: $color_accept;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+}
+
+.energy-switch {
+	$height: 26px;
+	$tumbler-width: 38px;
+	@include energy-switch($height, $tumbler-width);
+}
